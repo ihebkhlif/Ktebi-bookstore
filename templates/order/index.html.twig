@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Orders - BookNest{% endblock %}
+
+{% block body %}
+    <div class="container py-4">
+        <h1 class="mb-4">My Orders</h1>
+
+        {% if orders is empty %}
+            <div class="alert alert-info">
+                You haven't placed any orders yet. <a href="{{ path('app_home') }}">Browse our books</a> to get started!
+            </div>
+        {% else %}
+            <div class="row">
+                {% for order in orders %}
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="mb-0">Order #{{ order.id }}</h5>
+                                    <small class="text-muted">Placed on {{ order.createdAt|date('F j, Y') }}</small>
+                                </div>
+                                <div class="text-end">
+                                    <h6 class="mb-0">Total: ${{ order.totalPrice|number_format(2) }}</h6>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Book</th>
+                                                <th class="text-center">Quantity</th>
+                                                <th class="text-end">Price</th>
+                                                <th class="text-end">Subtotal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in order.orderItems %}
+                                                <tr>
+                                                    <td>{{ item.book.title }}</td>
+                                                    <td class="text-center">{{ item.quantity }}</td>
+                                                    <td class="text-end">${{ item.price|number_format(2) }}</td>
+                                                    <td class="text-end">${{ (item.price * item.quantity)|number_format(2) }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %} 

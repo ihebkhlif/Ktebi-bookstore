@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ book.title }} - BookNest{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_books') }}">Books</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ book.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <!-- Book Image -->
+        <div class="col-md-4 mb-4">
+            {% if book.image %}
+                <img src="{{ asset('uploads/books/' ~ book.image) }}" class="img-fluid rounded" alt="{{ book.title }}">
+            {% else %}
+                <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded" style="height: 400px;">
+                    <i class="fas fa-book fa-4x"></i>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Book Details -->
+        <div class="col-md-8">
+            <h1 class="mb-3">{{ book.title }}</h1>
+            <div class="mb-4">
+                <p class="lead mb-1">By {{ book.author }}</p>
+                {% if book.category %}
+                    <span class="badge bg-primary">{{ book.category.name }}</span>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <h4 class="text-primary mb-3">${{ book.price|number_format(2) }}</h4>
+                <form action="{{ path('app_cart_add', {'slug': book.slug}) }}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                    </button>
+                </form>
+            </div>
+
+            {% if book.description %}
+                <div class="mb-4">
+                    <h5>Description</h5>
+                    <p>{{ book.description }}</p>
+                </div>
+            {% endif %}
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Book Details</h5>
+                    <table class="table table-borderless mb-0">
+                        <tbody>
+                            {% if book.isbn %}
+                                <tr>
+                                    <th scope="row" style="width: 150px;">ISBN</th>
+                                    <td>{{ book.isbn }}</td>
+                                </tr>
+                            {% endif %}
+                            {% if book.publicationDate %}
+                                <tr>
+                                    <th scope="row">Publication Date</th>
+                                    <td>{{ book.publicationDate|date('F j, Y') }}</td>
+                                </tr>
+                            {% endif %}
+                            {% if book.publisher %}
+                                <tr>
+                                    <th scope="row">Publisher</th>
+                                    <td>{{ book.publisher }}</td>
+                                </tr>
+                            {% endif %}
+                            {% if book.pages %}
+                                <tr>
+                                    <th scope="row">Pages</th>
+                                    <td>{{ book.pages }}</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

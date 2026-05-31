@@ -1,0 +1,51 @@
+:root {
+    --primary-color: #93441A;
+    --primary-hover: #7a3815;
+}
+
+.ea-sidebar {
+    background-color: var(--primary-color);
+}
+
+.ea-sidebar .menu .menu-item.active:not(.expanded) {
+    background-color: var(--primary-hover);
+}
+
+.btn-primary, 
+.btn-primary:not(:disabled):not(.disabled):not(.btn-link):not(.btn-danger):active, 
+.btn-primary:not(:disabled):not(.disabled):not(.btn-link):not(.btn-danger):active:focus,
+.btn-primary:not(:disabled):not(.disabled):not(.btn-link):not(.btn-danger):focus,
+.btn-primary:not(:disabled):not(.disabled):not(.btn-link):not(.btn-danger):hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+.form-switch .form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.pagination .page-link {
+    color: var(--primary-color);
+}
+
+.datagrid thead .sorted.sort-desc i, 
+.datagrid thead .sorted.sort-asc i {
+    color: var(--primary-color);
+}
+
+.form-tabs .nav-tabs .nav-link.active, 
+.form-tabs .nav-tabs .nav-link:hover {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+} 

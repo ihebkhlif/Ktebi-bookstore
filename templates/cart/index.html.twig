@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Shopping Cart - BookNest{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Shopping Cart</h1>
+
+    {% if cart|length > 0 %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Book</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('app_book_show', {'slug': item.book.slug}) }}">
+                                    {{ item.book.title }}
+                                </a>
+                            </td>
+                            <td>${{ item.book.price|number_format(2) }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>${{ (item.book.price * item.quantity)|number_format(2) }}</td>
+                            <td>
+                                <form action="{{ path('app_cart_remove', {'slug': item.book.slug}) }}" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i> Remove
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                        <td colspan="2"><strong>${{ total|number_format(2) }}</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <form action="{{ path('app_cart_clear') }}" method="post">
+                <button type="submit" class="btn btn-warning">
+                    <i class="fas fa-trash"></i> Clear Cart
+                </button>
+            </form>
+            {% if app.user %}
+                <a href="{{ path('app_cart_checkout') }}" class="btn btn-success">
+                    <i class="fas fa-shopping-cart"></i> Proceed to Checkout
+                </a>
+            {% else %}
+                <div class="text-end">
+                    <p class="text-muted mb-2">Please login to checkout</p>
+                    <a href="{{ path('app_login') }}" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login to Checkout
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            Your cart is empty. <a href="{{ path('app_books') }}">Continue shopping</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

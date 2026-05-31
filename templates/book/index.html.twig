@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome to BookNest{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <!-- Hero Section -->
+    <div class="jumbotron text-center mb-5 bg-light p-5 rounded">
+        <h1 class="display-4">Welcome to BookNest</h1>
+        <p class="lead">Discover your next favorite book from our carefully curated collection.</p>
+        <a href="{{ path('app_books') }}" class="btn btn-primary btn-lg">Browse All Books</a>
+    </div>
+
+    <!-- Featured Books Section -->
+    <section class="mb-5">
+        <h2 class="mb-4">Featured Books</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for book in featured_books %}
+                <div class="col">
+                    <div class="card h-100">
+                        {% if book.image %}
+                            <img src="{{ asset('uploads/books/' ~ book.image) }}" class="card-img-top" alt="{{ book.title }}" style="height: 300px; object-fit: cover;">
+                        {% else %}
+                            <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 300px;">
+                                <i class="fas fa-book fa-3x"></i>
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            <p class="card-text">
+                                <strong>Author:</strong> {{ book.author }}<br>
+                                <strong>Price:</strong> ${{ book.price|number_format(2) }}
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{{ path('app_book_show', {'slug': book.slug}) }}" class="btn btn-info">Details</a>
+                                <form action="{{ path('app_cart_add', {'slug': book.slug}) }}" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-cart-plus"></i> Add to Cart
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section>
+        <h2 class="mb-4">Browse by Category</h2>
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            {% for category in categories %}
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ category.name }}</h5>
+                            <p class="card-text text-muted">{{ category.books|length }} books</p>
+                            <a href="{{ path('app_books', {'category': category.id}) }}" class="btn btn-outline-primary">View Books</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %} 

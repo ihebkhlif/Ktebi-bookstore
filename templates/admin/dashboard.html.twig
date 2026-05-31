@@ -1,0 +1,54 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-2 col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Books</h5>
+                    <p class="card-text display-4">{{ count_books }}</p>
+                  {#<a href="{{ ea_url().setController('App\\\\Controller\\\\Admin\\\\BookCrudController') }}" class="card-link">Manage Books</a> #} 
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Categories</h5>
+                    <p class="card-text display-4">{{ count_categories }}</p>
+                  {# <a href="{{ ea_url().setController('App\\\\Controller\\\\Admin\\\\CategoryCrudController') }}" class="card-link">Manage Categories</a>#} 
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Orders</h5>
+                    <p class="card-text display-4">{{ count_orders }}</p>
+                 {#<a href="{{ ea_url().setController('App\\\\Controller\\\\Admin\\\\OrderCrudController') }}" class="card-link">View Orders</a>#}   
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Users</h5>
+                    <p class="card-text display-4">{{ count_users }}</p>
+                    {#<a href="{{ ea_url().setController('App\\\\Controller\\\\Admin\\\\UserCrudController') }}" class="card-link">Manage Users</a>#}
+                </div>
+            </div>
+        </div>
+    
+    <div class="col-lg-2 col-6">
+        <div class="card">
+            <div class="card-body d-flex align-items-center">  <!-- Added flex display -->
+                <h5 class="card-title ">Total Revenue:</h5>  <!-- Added margin classes -->
+                <p class="card-text display-6 pb-5 ">${{ total_revenue|number_format(2) }}</p>  <!-- Added mb-0 -->
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+</div>
+{% endblock %} 

@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Books - BookNest{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Filters Sidebar -->
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Filters</h5>
+                    {{ form_start(filterForm) }}
+                        <div class="mb-3">
+                            {{ form_row(filterForm.category) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_row(filterForm.priceMin) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_row(filterForm.priceMax) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_row(filterForm.sort) }}
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                    {{ form_end(filterForm) }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Books Grid -->
+        <div class="col-md-9">
+            <h1 class="mb-4">Books</h1>
+            
+            {% if books|length > 0 %}
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    {% for book in books %}
+                        <div class="col">
+                            <div class="card h-100">
+                                {% if book.image %}
+                                    <img src="{{ asset('uploads/books/' ~ book.image) }}" class="card-img-top" alt="{{ book.title }}" style="height: 300px; object-fit: cover;">
+                                {% else %}
+                                    <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 300px;">
+                                        <i class="fas fa-book fa-3x"></i>
+                                    </div>
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ book.title }}</h5>
+                                    <p class="card-text">
+                                        <strong>Author:</strong> {{ book.author }}<br>
+                                        <strong>Price:</strong> ${{ book.price|number_format(2) }}
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <a href="{{ path('app_book_show', {'slug': book.slug}) }}" class="btn btn-info">Details</a>
+                                        <form action="{{ path('app_cart_add', {'slug': book.slug}) }}" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-cart-plus"></i> Add to Cart
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                {% if total_pages > 1 %}
+                    <nav class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            {% for i in 1..total_pages %}
+                                <li class="page-item {{ current_page == i ? 'active' : '' }}">
+                                    <a class="page-link" href="{{ path('app_books', {'page': i}|merge(app.request.query.all)) }}">
+                                        {{ i }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            {% else %}
+                <div class="alert alert-info">
+                    No books found matching your criteria.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

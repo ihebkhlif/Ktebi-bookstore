@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Low Stock Alert - BookNest</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .alert {
+            background: #fff3cd;
+            color: #856404;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ffeeba;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Low Stock Alert</h1>
+    </div>
+
+    <div class="alert">
+        <h2>Stock Level Warning</h2>
+        <p>The following book is running low on stock:</p>
+        <p><strong>Book Title:</strong> {{ bookTitle }}</p>
+        <p><strong>Current Stock:</strong> {{ currentStock }} units</p>
+    </div>
+
+    <p>Please review the inventory and restock if necessary.</p>
+
+    <div class="footer">
+        <p>This is an automated message from BookNest Inventory Management System.</p>
+    </div>
+</body>
+</html> 
